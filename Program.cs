@@ -1,4 +1,6 @@
 ﻿using System;
+using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 
 namespace FirstAntlr4Example
 {
@@ -6,7 +8,15 @@ namespace FirstAntlr4Example
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            String input = "hello will";
+
+            var stream = new AntlrInputStream(input);
+            var lexer = new HelloLexer(stream);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new HelloParser(tokens);
+            var compileUnit = parser.r();
+
+            Console.WriteLine(compileUnit.ToStringTree());
         }
     }
 }
